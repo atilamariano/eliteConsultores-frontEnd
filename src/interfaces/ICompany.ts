@@ -10,3 +10,10 @@ export interface ICompany {
   status?: string;
   municipalRegistration: string;
 }
+
+
+export const EnumStatus = {
+  ALL: "all",
+  ACTIVE: "active",
+  INATIVE: "inative",
+};
