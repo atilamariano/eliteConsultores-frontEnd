@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Body from '../../components/body/Body';
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Body />
+    </div>
   )
 }
 
