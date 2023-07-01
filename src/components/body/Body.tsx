@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { GetAllCompanies } from '../../services/companyReq/getAllCompanies';
-import { EnumStatus, ICompany } from '../../interfaces/ICompany';
+import { ICompany } from '../../interfaces/ICompany';
 import { FilterComponent } from './../filter/Filter';
+import { Modal } from './../modal/Modal';
+import { PatchCompanyById } from '../../services/companyReq/patchCompanyById';
 
-function Body() {
+export function Body() {
     const [companies, setCompanies] = useState<ICompany[]>([]);
     const [expandedCompany, setExpandedCompany] = useState<string>('');
     const [filteredCompanies, setFilteredCompanies] = useState<ICompany[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     useEffect(() => {
         fetchCompanies();
@@ -15,7 +20,9 @@ function Body() {
     async function fetchCompanies() {
         try {
             const response = await GetAllCompanies();
-            const sortedData = response.data.sort((a: { businessName: string; }, b: { businessName: any; }) => a.businessName.localeCompare(b.businessName));
+            const sortedData = response.data.sort((a: { corporateName: string }, b: { businessName: string }) =>
+                a.corporateName.localeCompare(b.businessName)
+            );
             setCompanies(sortedData);
             setFilteredCompanies(sortedData);
         } catch (error) {
@@ -24,7 +31,7 @@ function Body() {
     }
 
     function handleExpandCompany(companyId: string) {
-        setExpandedCompany(companyId === expandedCompany ? '' : companyId);
+        setExpandedCompany((prevCompanyId) => (prevCompanyId === companyId ? '' : companyId));
     }
 
     function handleFilter({ status, dataInicial, dataFinal }: { status: string; dataInicial?: string; dataFinal?: string }) {
@@ -50,37 +57,74 @@ function Body() {
             });
         }
 
-
         setFilteredCompanies(filteredData);
     }
 
+    function handleOpenModal(company: ICompany) {
+        setSelectedCompany(company);
+        setIsModalOpen(true);
+    }
+
+    function handleCloseModal() {
+        setSelectedCompany(null);
+        setIsModalOpen(false);
+    }
+
+    async function handleUpdateCompany(updatedCompany: ICompany) {
+        try {
+            await PatchCompanyById(updatedCompany.id, updatedCompany);
+
+            const updatedCompanies = companies.map((company) => {
+                if (company.id === updatedCompany.id) {
+                    return updatedCompany;
+                }
+                return company;
+            });
+
+            setCompanies(updatedCompanies);
+            setShowSuccessMessage(true);
+            handleCloseModal();
+
+        } catch (error) {
+            console.error('Error updating company:', error);
+        }
+    }
 
     return (
         <div>
-            <h1>Lista de Empresas</h1>
+            {showSuccessMessage && (
+                <div className="success-alert">
+                    Dados Salvos
+                </div>
+            )}
+
             <FilterComponent onFilter={handleFilter} />
 
-            <ul>
+            <div>
                 {filteredCompanies.map((company) => (
-                    <li key={company.id}>
-                        <button onClick={() => handleExpandCompany(company.id)}>{company.businessName}</button>
-                        {company.id === expandedCompany && (
-                            <div>
-                                <p>Código: {company.code}</p>
-                                <p>CNPJ: {company.cnpj}</p>
-                                <p>Responsável: {company.contactPerson}</p>
-                                <p>Telefone de Contato: {company.contactPhone}</p>
-                                <p>Email de Contato: {company.contactEmail}</p>
-                                <p>Data de Inclusão: {company.inclusionDate}</p>
-                                <p>Status: {company.status}</p>
-                                <p>Inscrição Municipal: {company.municipalRegistration}</p>
-                            </div>
-                        )}
-                    </li>
+                    <div key={company.id}>
+                        <div onClick={() => handleExpandCompany(company.id)}>
+                            <h5>{company.corporateName}</h5>
+                            {expandedCompany === company.id ? (
+                                <div>
+                                    <p>Codigo: {company.code}</p>
+                                    <p>CNPJ: {company.cnpj}</p>
+                                    <p>Nome Fantasia: {company.fantasyName}</p>
+                                    <p>Responsável: {company.contactPerson}</p>
+                                    <p>Email: {company.contactEmail}</p>
+                                    <p>Telefone: {company.contactPhone}</p>
+                                    <p>Status: {company.status}</p>
+                                    <button onClick={() => handleOpenModal(company)}>Editar</button>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
+
+            {selectedCompany && (
+                <Modal isOpen={isModalOpen} onClose={handleCloseModal} company={selectedCompany} onUpdate={handleUpdateCompany} />
+            )}
         </div>
     );
 }
-
-export default Body;

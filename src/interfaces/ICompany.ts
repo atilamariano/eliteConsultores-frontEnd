@@ -2,7 +2,8 @@ export interface ICompany {
   id: string;
   code: string;
   cnpj: string;
-  businessName: string;
+  corporateName: string;
+  fantasyName: string;
   contactPerson: string;
   contactPhone: string;
   contactEmail: string;
@@ -10,10 +11,3 @@ export interface ICompany {
   status?: string;
   municipalRegistration: string;
 }
-
-
-export const EnumStatus = {
-  ALL: "all",
-  ACTIVE: "active",
-  INATIVE: "inative",
-};

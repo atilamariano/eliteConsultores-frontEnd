@@ -17,7 +17,7 @@ export const FilterComponent: React.FC<FilterProps> = ({ onFilter }) => {
         <div>
             <label htmlFor="status">Status:</label>
             <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-                <option value={"todos"}>Todos</option>
+                <option value="todos">Todos</option>
                 <option value="ACTIVE">Ativas</option>
                 <option value="INATIVE">Inativas</option>
             </select>
