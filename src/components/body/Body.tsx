@@ -4,6 +4,7 @@ import { ICompany } from '../../interfaces/ICompany';
 import { FilterComponent } from './../filter/Filter';
 import { Modal } from './../modal/Modal';
 import { PatchCompanyById } from '../../services/companyReq/patchCompanyById';
+import { DeleteCompanyById } from '../../services/companyReq/deleteCompanyById';
 
 export function Body() {
     const [companies, setCompanies] = useState<ICompany[]>([]);
@@ -11,7 +12,6 @@ export function Body() {
     const [filteredCompanies, setFilteredCompanies] = useState<ICompany[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     useEffect(() => {
         fetchCompanies();
@@ -82,22 +82,30 @@ export function Body() {
             });
 
             setCompanies(updatedCompanies);
-            setShowSuccessMessage(true);
             handleCloseModal();
-
         } catch (error) {
             console.error('Error updating company:', error);
         }
     }
 
+    async function handleDeleteCompany(companyId: string) {
+        const confirmDelete = window.confirm('Tem certeza que deseja excluir esta empresa?');
+
+        if (confirmDelete) {
+            try {
+                await DeleteCompanyById(companyId);
+
+                const updatedCompanies = companies.filter((company) => company.id !== companyId);
+
+                setCompanies(updatedCompanies);
+            } catch (error) {
+                console.error('Error deleting company:', error);
+            }
+        }
+    }
+
     return (
         <div>
-            {showSuccessMessage && (
-                <div className="success-alert">
-                    Dados Salvos
-                </div>
-            )}
-
             <FilterComponent onFilter={handleFilter} />
 
             <div>
@@ -113,8 +121,10 @@ export function Body() {
                                     <p>Responsável: {company.contactPerson}</p>
                                     <p>Email: {company.contactEmail}</p>
                                     <p>Telefone: {company.contactPhone}</p>
+                                    <p>Data da Inclusão: {company.inclusionDate}</p>
                                     <p>Status: {company.status}</p>
                                     <button onClick={() => handleOpenModal(company)}>Editar</button>
+                                    <button onClick={() => handleDeleteCompany(company.id)}>Excluir</button>
                                 </div>
                             ) : null}
                         </div>

@@ -30,7 +30,10 @@ export function Modal({ isOpen, onClose, company, onUpdate }: ModalProps) {
     try {
       await PatchCompanyById(updatedCompany.id, updatedCompany);
 
-      onUpdate(updatedCompany); // Chamada para atualizar a empresa no componente Body
+      onUpdate(updatedCompany);
+
+      window.alert('Dados Atualizados');
+      window.location.reload();
 
       onClose();
     } catch (error) {
