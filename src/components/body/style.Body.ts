@@ -10,12 +10,20 @@ export const StyledBody = styled.div`
   }
 `;
 
+export const ContynerComponies = styled.div`
+margin-top: 4rem;
+
+@media (max-width: 768px) {
+    margin-top: calc(4rem + (800vw - 768px) * 0.1);
+  }
+`
+
 export const CompanyContainer = styled.div<{
   active?: boolean;
   inative?: boolean;
 }>`
   background-color: ${({ active, inative }) =>
-    active ? "blue" : inative ? "red" : "white"};
+    active ? "#3366ff" : inative ? "#ff3300" : "white"};
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
@@ -24,9 +32,11 @@ export const CompanyContainer = styled.div<{
   align-items: center;
   border-radius: 0.5rem;
   transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 
   &:hover {
     transform: scale(1.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
   }
 
   @media (max-width: 768px) {

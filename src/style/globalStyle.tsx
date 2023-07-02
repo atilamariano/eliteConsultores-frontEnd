@@ -8,8 +8,8 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     html {
-      background: rgb(200, 200, 200);
-    } 
+      background-color:  #002b80;
+ } 
 
     button {
       padding: 3px;
@@ -19,6 +19,8 @@ export const GlobalStyle = createGlobalStyle`
       color: #ffffff;
       background: none;
       transition: all 0.2s ease-in-out;
+      font-size: 15px;
+      margin: 0px 5px;
 
       &:hover {
         transform: scale(1.1);

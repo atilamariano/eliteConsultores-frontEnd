@@ -5,8 +5,7 @@ import { FilterComponent } from './../filter/Filter';
 import { Modal } from './../modal/Modal';
 import { PatchCompanyById } from '../../services/companyReq/patchCompanyById';
 
-import { ExportExcelButton } from '../exportExcelButton/exportExcelButton';
-import { StyledBody, CompanyContainer, CompanyInfo, CompanyTable, CompanyActions } from './style.Body';
+import { StyledBody, CompanyContainer, CompanyInfo, CompanyTable, CompanyActions, ContynerComponies } from './style.Body';
 import { DeleteCompanyById } from '../../services/companyReq/deleteCompanyById';
 
 export function Body() {
@@ -109,71 +108,74 @@ export function Body() {
 
   return (
     <StyledBody>
-    <FilterComponent onFilter={handleFilter} />
-    <ExportExcelButton
-      companies={filteredCompanies}
-      selectedFields={['code', 'cnpj', 'corporateName', 'municipalRegistration', 'inclusionDate', 'contactPerson']}
-    />
+      <FilterComponent
+        onFilter={handleFilter}
+        filteredCompanies={filteredCompanies}
+      />
 
-    <div>
-      {filteredCompanies.map((company) => (
-        <CompanyContainer key={company.id} active={company.status === 'ACTIVE'} inative={company.status === 'INATIVE'}>
-          <CompanyInfo onClick={() => handleExpandCompany(company.id)}>
-            <h4 style={{color: 'white'}}>{company.corporateName}</h4>
-            {expandedCompany === company.id && (
-              <CompanyTable>
-                <tbody>
-                  <tr>
-                    <td><b>Código:</b></td>
-                    <td>{company.code}</td>
-                  </tr>
-                  <tr>
-                    <td><b>CNPJ:</b></td>
-                    <td>{company.cnpj}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Nome Fantasia:</b></td>
-                    <td>{company.fantasyName}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Responsável:</b></td>
-                    <td>{company.contactPerson}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Email:</b></td>
-                    <td>{company.contactEmail}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Telefone:</b></td>
-                    <td>{company.contactPhone}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Inscrição Municipal:</b></td>
-                    <td>{company.municipalRegistration}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Data da Inclusão:</b></td>
-                    <td>{company.inclusionDate}</td>
-                  </tr>
-                  <tr>
-                    <td><b>Status:</b></td>
-                    <td>{company.status}</td>
-                  </tr>
-                </tbody>
-              </CompanyTable>
-            )}
-          </CompanyInfo>
-          <CompanyActions>
-            <button onClick={() => handleOpenModal(company)}>Editar</button>
-            <button onClick={() => handleDeleteCompany(company.id)}>Excluir</button>
-          </CompanyActions>
-        </CompanyContainer>
-      ))}
-    </div>
+      <ContynerComponies>
+        {filteredCompanies.map((company) => (
 
-    {selectedCompany && (
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} company={selectedCompany} onUpdate={handleUpdateCompany} />
-    )}
-  </StyledBody>
+
+          <CompanyContainer key={company.id} active={company.status === 'ACTIVE'} inative={company.status === 'INATIVE'}>
+
+            <CompanyInfo onClick={() => handleExpandCompany(company.id)}>
+              <h4 style={{ color: 'white' }}>{company.corporateName}</h4>
+              {expandedCompany === company.id && (
+                <CompanyTable>
+                  <tbody>
+                    <tr>
+                      <td><b>Código:</b></td>
+                      <td>{company.code}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CNPJ:</b></td>
+                      <td>{company.cnpj}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Nome Fantasia:</b></td>
+                      <td>{company.fantasyName}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Responsável:</b></td>
+                      <td>{company.contactPerson}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Email:</b></td>
+                      <td>{company.contactEmail}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Telefone:</b></td>
+                      <td>{company.contactPhone}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Inscrição Municipal:</b></td>
+                      <td>{company.municipalRegistration}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Data da Inclusão:</b></td>
+                      <td>{company.inclusionDate}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Status:</b></td>
+                      <td>{company.status}</td>
+                    </tr>
+                  </tbody>
+                </CompanyTable>
+              )}
+            </CompanyInfo>
+            <CompanyActions>
+              <button onClick={() => handleOpenModal(company)}>Editar</button>
+              <button onClick={() => handleDeleteCompany(company.id)}>Excluir</button>
+            </CompanyActions>
+          </CompanyContainer>
+
+        ))}
+      </ContynerComponies>
+
+      {selectedCompany && (
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} company={selectedCompany} onUpdate={handleUpdateCompany} />
+      )}
+    </StyledBody>
   );
 }
