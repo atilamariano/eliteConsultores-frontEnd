@@ -120,7 +120,7 @@ export function Body() {
           <CompanyContainer key={company.id} active={company.status === 'ACTIVE'} inative={company.status === 'INATIVE'}>
 
             <CompanyInfo onClick={() => handleExpandCompany(company.id)}>
-              <h4 style={{ color: 'white' }}>{company.corporateName}</h4>
+              <h4>{company.corporateName}</h4>
               {expandedCompany === company.id && (
                 <CompanyTable>
                   <tbody>

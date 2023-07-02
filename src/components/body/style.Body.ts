@@ -14,7 +14,7 @@ export const ContynerComponies = styled.div`
 margin-top: 4rem;
 
 @media (max-width: 768px) {
-    margin-top: calc(4rem + (800vw - 768px) * 0.1);
+    margin-top: calc(4rem + (1000vw - 768px) * 0.1);
   }
 `
 
@@ -46,6 +46,7 @@ export const CompanyContainer = styled.div<{
     h4 {
       margin-bottom: 5px;
       font-size: 18px;
+      color: #fff;
     }
 
     p {
@@ -57,6 +58,14 @@ export const CompanyContainer = styled.div<{
 export const CompanyInfo = styled.div`
   flex: 1;
   margin-right: 10px;
+  text-align: center;
+
+  h4 {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; 
+    color: #fff;
+  }
 
   td {
     color: white;
@@ -77,6 +86,7 @@ export const CompanyTable = styled.table`
     padding: 8px;
     border-bottom: 1px solid #ddd;
     text-align: left;
+    word-break: break-word;
   }
 
   th {
