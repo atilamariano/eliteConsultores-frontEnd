@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PatchCompanyById } from '../../services/companyReq/patchCompanyById';
 import { ICompany } from '../../interfaces/ICompany';
+import { ModalButtons, ModalContainer, ModalForm, ModalTitle } from './style.Modal';
 
 type ModalProps = {
   isOpen: boolean;
@@ -42,10 +43,10 @@ export function Modal({ isOpen, onClose, company, onUpdate }: ModalProps) {
   };
 
   return (
-    <div className={`modal ${isOpen ? 'open' : ''}`}>
+    <ModalContainer className={isOpen ? 'open' : ''}>
       <div className="modal-content">
-        <h2>Atualizar Empresa</h2>
-        <form>
+        <ModalTitle>Atualizar Empresa</ModalTitle>
+        <ModalForm>
           <label htmlFor="fantasyName">Nome Fantasia:</label>
           <input
             id="fantasyName"
@@ -88,16 +89,17 @@ export function Modal({ isOpen, onClose, company, onUpdate }: ModalProps) {
             <option value="INATIVE">INATIVE</option>
           </select>
 
-          <div className="modal-buttons">
+          <ModalButtons>
             <button type="button" className="cancel-button" onClick={onClose}>
               Cancelar
             </button>
             <button type="button" className="save-button" onClick={handleSave}>
               Salvar
             </button>
-          </div>
-        </form>
+          </ModalButtons>
+        </ModalForm>
       </div>
-    </div>
+    </ModalContainer>
   );
+
 }

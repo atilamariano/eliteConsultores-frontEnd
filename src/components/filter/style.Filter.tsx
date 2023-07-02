@@ -10,7 +10,7 @@ export const FilterContainer = styled.div`
   padding: 10px;
   background-color: #fff;
   position: fixed;
-  z-index: 9999;
+  z-index: 999;
 
 
   @media (max-width: 768px) {
@@ -36,9 +36,8 @@ export const FilterContainer = styled.div`
   }
 
   button {
-    border: 1px solid;
-    color: #000000;
-    background-color: #fff;
-    padding: 0.3em;
+    background-color: #3366ff;
+    color: #fff;
+    border: none;
   }
 `;
