@@ -5,6 +5,7 @@ import { FilterComponent } from './../filter/Filter';
 import { Modal } from './../modal/Modal';
 import { PatchCompanyById } from '../../services/companyReq/patchCompanyById';
 import { DeleteCompanyById } from '../../services/companyReq/deleteCompanyById';
+import { ExportExcelButton } from '../exportExcelButton/exportExcelButton';
 
 export function Body() {
     const [companies, setCompanies] = useState<ICompany[]>([]);
@@ -20,8 +21,8 @@ export function Body() {
     async function fetchCompanies() {
         try {
             const response = await GetAllCompanies();
-            const sortedData = response.data.sort((a: { corporateName: string }, b: { businessName: string }) =>
-                a.corporateName.localeCompare(b.businessName)
+            const sortedData = response.data.sort((a: { corporateName: string }, b: { corporateName: string }) =>
+                a.corporateName.localeCompare(b.corporateName)
             );
             setCompanies(sortedData);
             setFilteredCompanies(sortedData);
@@ -107,20 +108,26 @@ export function Body() {
     return (
         <div>
             <FilterComponent onFilter={handleFilter} />
+            <ExportExcelButton
+                companies={filteredCompanies}
+                selectedFields={['code', 'cnpj', 'corporateName', 'municipalRegistration', 'inclusionDate', 'contactPerson']}
+            />
+
 
             <div>
                 {filteredCompanies.map((company) => (
                     <div key={company.id}>
                         <div onClick={() => handleExpandCompany(company.id)}>
-                            <h5>{company.corporateName}</h5>
+                            <h4>{company.corporateName}</h4>
                             {expandedCompany === company.id ? (
                                 <div>
-                                    <p>Codigo: {company.code}</p>
+                                    <p>Código: {company.code}</p>
                                     <p>CNPJ: {company.cnpj}</p>
                                     <p>Nome Fantasia: {company.fantasyName}</p>
                                     <p>Responsável: {company.contactPerson}</p>
                                     <p>Email: {company.contactEmail}</p>
                                     <p>Telefone: {company.contactPhone}</p>
+                                    <p>Inscrição Municipal: {company.municipalRegistration}</p>
                                     <p>Data da Inclusão: {company.inclusionDate}</p>
                                     <p>Status: {company.status}</p>
                                     <button onClick={() => handleOpenModal(company)}>Editar</button>
