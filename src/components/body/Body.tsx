@@ -23,8 +23,8 @@ export function Body() {
   async function fetchCompanies() {
     try {
       const response = await GetAllCompanies();
-      const sortedData = response.data.sort((a: { corporateName: string }, b: { businessName: string }) =>
-        a.corporateName.localeCompare(b.businessName)
+      const sortedData = response.data.sort((a: { corporateName: string }, b: { corporateName: string }) =>
+        a.corporateName.localeCompare(b.corporateName)
       );
       setCompanies(sortedData);
       setFilteredCompanies(sortedData);

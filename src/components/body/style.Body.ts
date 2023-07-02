@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledBody = styled.div`
   display: flex;
@@ -10,17 +10,37 @@ export const StyledBody = styled.div`
   }
 `;
 
-export const CompanyContainer = styled.div<{ active?: boolean, inative?: boolean }>`
-  background-color: ${({ active, inative }) => (active ? 'blue' : inative ? 'red' : 'white')};
+export const CompanyContainer = styled.div<{
+  active?: boolean;
+  inative?: boolean;
+}>`
+  background-color: ${({ active, inative }) =>
+    active ? "blue" : inative ? "red" : "white"};
   padding: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
+    width: 90vw;
+
+    h4 {
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
   }
 `;
 

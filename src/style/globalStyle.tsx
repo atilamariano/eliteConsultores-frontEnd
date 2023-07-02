@@ -8,11 +8,20 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     html {
-        background: rgb(200, 200, 200);
+      background: rgb(200, 200, 200);
     } 
 
     button {
-        cursor: pointer;
-        background: rgba(0, 0, 0, 0.0);
+      padding: 3px;
+      cursor: pointer;
+      border-radius: 3px;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      background: none;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
 `;
