@@ -1,4 +1,3 @@
-import React from 'react';
 import * as XLSX from 'xlsx';
 import { ExportExcelButtonProps } from '../../types/typeExportExcelButton';
 import { Button } from './style.ExcelButton';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetAllCompanies } from '../../services/companyReq/getAllCompanies';
 import { ICompany } from '../../interfaces/ICompany';
 import { FilterComponent } from './../filter/Filter';
