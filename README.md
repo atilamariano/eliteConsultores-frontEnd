@@ -87,7 +87,7 @@ Este projeto foi desenvolvido como parte do processo seletivo para a vaga de Ful
 
 O front-end do projeto é apenas uma implementação de exemplo e pode ser personalizado e estendido de acordo com as necessidades específicas.
 
-Caso precise de mais informações, fique à vontade para entrar em contato, ficarei feliz em eslarecer qualquer duvida sobre o projeto.
+Caso precise de mais informações, fique à vontade para entrar em contato, ficarei feliz em esclarecer qualquer duvida sobre o projeto.
 
 Autor: Átila Mariano. Contato: atilamariano@hotmail.com
 
